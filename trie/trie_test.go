@@ -76,3 +76,32 @@ func TestTrieMultipleWords(t *testing.T) {
 	_, err = trie.Search(BabakAli)
 	assert.Equal(triePkg.ErrWordDoesNotExist, err)
 }
+
+func TestGetAllWords(t *testing.T) {
+	words := []string{Arsham, Atousa, Arthas, BabakAli, Banana, Babak, Baba}
+	assert := assert.New(t)
+	trie := triePkg.New()
+
+	for _, word := range words {
+		trie.Insert(word)
+	}
+
+	allWords := trie.GetAllTheWords("")
+	assert.ElementsMatch(words, allWords)
+}
+
+func TestAutoComplete(t *testing.T) {
+	words := []string{Arsham, Banana, Arthas, Babak, Baba, Atousa}
+	expectedOutput := []string{Baba, Babak, Banana}
+	assert := assert.New(t)
+	trie := triePkg.New()
+
+	for _, word := range words {
+		trie.Insert(word)
+	}
+
+	// TODO: include more test cases for empty input, not-exist input, etc.
+	words, err := trie.AutoComplete("Ba")
+	assert.Nil(err)
+	assert.ElementsMatch(expectedOutput, words)
+}

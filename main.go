@@ -41,4 +41,12 @@ func main() {
 	// fmt.Println(item)
 	// fmt.Println(st)
 
+	/*** Trie ***/
+	// trie := trie.New()
+
+	// trie.Insert("ab")
+	// trie.Insert("a")
+
+	// allWords := trie.GetAllTheWords()
+	// fmt.Println(allWords)
 }
