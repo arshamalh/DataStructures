@@ -1,7 +1,7 @@
 package bst
 
 import (
-	"ds/queue"
+	"github.com/arshamalh/DataStructures/queue"
 )
 
 type TraverseType string

@@ -1,8 +1,9 @@
 package trie_test
 
 import (
-	triePkg "ds/trie"
 	"testing"
+
+	triePkg "github.com/arshamalh/DataStructures/trie"
 
 	"github.com/stretchr/testify/assert"
 )
