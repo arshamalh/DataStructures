@@ -2,31 +2,31 @@ package priorityqueue
 
 import "fmt"
 
-type Node[T any] struct {
+type Node[T any, P ~int | ~uint | float64] struct {
 	Value    T
-	Priority int
+	Priority P
 }
 
-type PriorityQueue[T any] struct {
-	values []*Node[T]
+type PriorityQueue[T any, P ~int | ~uint | float64] struct {
+	values []*Node[T, P]
 }
 
-func New[T any]() *PriorityQueue[T] {
-	return &PriorityQueue[T]{
-		values: []*Node[T]{},
+func New[T any, P ~int | ~uint | float64]() *PriorityQueue[T, P] {
+	return &PriorityQueue[T, P]{
+		values: []*Node[T, P]{},
 	}
 }
 
-func (pq *PriorityQueue[T]) Insert(value T, piority int) *PriorityQueue[T] {
+func (pq *PriorityQueue[T, P]) Insert(value T, priority P) *PriorityQueue[T, P] {
 	current_idx := len(pq.values)
-	pq.values = append(pq.values, &Node[T]{
-		Priority: piority,
+	pq.values = append(pq.values, &Node[T, P]{
+		Priority: priority,
 		Value:    value,
 	})
 	parent_idx := (current_idx - 1) / 2
 
 	// Bubble Up
-	for pq.values[parent_idx].Priority > piority {
+	for pq.values[parent_idx].Priority > priority {
 		pq.values[parent_idx], pq.values[current_idx] = pq.values[current_idx], pq.values[parent_idx]
 		current_idx = parent_idx
 		parent_idx = (current_idx - 1) / 2
@@ -34,7 +34,10 @@ func (pq *PriorityQueue[T]) Insert(value T, piority int) *PriorityQueue[T] {
 	return pq
 }
 
-func (pq *PriorityQueue[T]) Remove() (priority int, value T) {
+func (pq *PriorityQueue[T, P]) Remove() (priority P, value T, ok bool) {
+	if len(pq.values) == 0 {
+		return 0, *new(T), false
+	}
 	node := pq.values[0]
 	last_index := len(pq.values) - 1
 	pq.values[0] = pq.values[last_index]
@@ -49,12 +52,12 @@ func (pq *PriorityQueue[T]) Remove() (priority int, value T) {
 		next_idx = pq.nextIndex(n)
 	}
 
-	return node.Priority, node.Value
+	return node.Priority, node.Value, true
 }
 
 // Returns the index of the maximum of the next row.
 // If the current node is a leaf, returns 0
-func (pq *PriorityQueue[T]) nextIndex(n int) (idx int) {
+func (pq *PriorityQueue[T, P]) nextIndex(n int) (idx int) {
 	idx_left := 2*n + 1
 	idx_right := idx_left + 1
 	if idx_right >= len(pq.values) {
@@ -69,8 +72,8 @@ func (pq *PriorityQueue[T]) nextIndex(n int) (idx int) {
 	return idx_right
 }
 
-func (pq *PriorityQueue[T]) String() string {
-	values := []Node[T]{}
+func (pq *PriorityQueue[T, P]) String() string {
+	values := []Node[T, P]{}
 	for _, item := range pq.values {
 		values = append(values, *item)
 	}
