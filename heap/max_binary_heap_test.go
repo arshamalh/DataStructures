@@ -7,11 +7,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMinBinaryHeap(t *testing.T) {
+func TestMaxBinaryHeap(t *testing.T) {
 	assert := assert.New(t)
 	input := []int{5, 1, 6, 2, 4, 3}
-	expectedOutput := []int{1, 2, 3, 4, 5, 6}
-	bh := heap.NewMinBinaryHeap()
+	expectedOutput := []int{6, 5, 4, 3, 2, 1}
+	bh := heap.NewMaxBinaryHeap()
 	for _, n := range input {
 		bh.Push(n)
 	}

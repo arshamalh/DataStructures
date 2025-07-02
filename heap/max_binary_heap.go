@@ -14,7 +14,7 @@ func NewMaxBinaryHeap() *MaxBinaryHeap {
 	}
 }
 
-func (bh *MaxBinaryHeap) Insert(value int) *MaxBinaryHeap {
+func (bh *MaxBinaryHeap) Push(value int) *MaxBinaryHeap {
 	current_idx := len(bh.values)
 	bh.values = append(bh.values, value)
 	parent_idx := (current_idx - 1) / 2
@@ -28,7 +28,10 @@ func (bh *MaxBinaryHeap) Insert(value int) *MaxBinaryHeap {
 	return bh
 }
 
-func (bh *MaxBinaryHeap) Remove() (value int) {
+func (bh *MaxBinaryHeap) Pop() (value int, ok bool) {
+	if len(bh.values) == 0 {
+		return 0, false
+	}
 	value = bh.values[0]
 	last_index := len(bh.values) - 1
 	bh.values[0] = bh.values[last_index]
@@ -43,7 +46,7 @@ func (bh *MaxBinaryHeap) Remove() (value int) {
 		next_idx = bh.nextIndex(n)
 	}
 
-	return value
+	return value, true
 }
 
 // Returns the index of the maximum of the next row.
@@ -65,4 +68,8 @@ func (bh *MaxBinaryHeap) nextIndex(n int) (idx int) {
 
 func (bh *MaxBinaryHeap) String() string {
 	return fmt.Sprint(bh.values)
+}
+
+func (bh *MaxBinaryHeap) Len() int {
+	return len(bh.values)
 }

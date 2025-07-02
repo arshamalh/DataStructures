@@ -14,7 +14,7 @@ func NewMinBinaryHeap() *MinBinaryHeap {
 	}
 }
 
-func (bh *MinBinaryHeap) Insert(value int) *MinBinaryHeap {
+func (bh *MinBinaryHeap) Push(value int) *MinBinaryHeap {
 	current_idx := len(bh.values)
 	bh.values = append(bh.values, value)
 	parent_idx := (current_idx - 1) / 2
@@ -28,7 +28,7 @@ func (bh *MinBinaryHeap) Insert(value int) *MinBinaryHeap {
 	return bh
 }
 
-func (bh *MinBinaryHeap) Remove() (value int, ok bool) {
+func (bh *MinBinaryHeap) Pop() (value int, ok bool) {
 	if len(bh.values) == 0 {
 		return 0, false
 	}
